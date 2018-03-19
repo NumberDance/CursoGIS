@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/claro/claro.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+        <link rel="stylesheet" href="estilo.css">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script>var dojoConfig = { parseOnLoad: true };</script>
+        <script src="https://js.arcgis.com/3.23/"></script>
+        
+        <script src="EsriAplicacion.js"></script>
+        <script src="EsriAplicacionPuntos.js"></script>
+        <script>
+            require
+            (
+                dependencias, 
+                function
+                (
+                    Map,Utils,FeatureLayer,GraphicsLayer,
+                    Graphic,Point,SimpleMarkerSymbol,Color
+                )
+                {
+                    var api = {};
+                    api["Map"] = Map;
+                    api["Utils"] = Utils;
+                    api["FeatureLayer"] = FeatureLayer;
+                    api["GraphicsLayer"] = GraphicsLayer;
+                    
+                    api["Graphic"] = Graphic;
+                    api["Point"] = Point;
+                    api["SimpleMarkerSymbol"] = SimpleMarkerSymbol;
+                    api["Color"] = Color;
+        
+                    var aplicacion = new EsriAplicacionPuntos(api);
+                    aplicacion.cargarMapaEnBlanco("mapa");
+                    //aplicacion.cargarMapaOnline("F92ab37c834b4ed3bdef2f8b680114ca","mapa");
+                    aplicacion.agregarCapaGrafica("geom1");
+                    aplicacion.agregarDibujarPuntos("geom1",aplicacion.getMapa(),aplicacion.getApi());
+                }
+            );
+        </script>
+    </head>
+    <body>
+        <div id="mapa"></div>
+        <div id="lista"></div>
+    </body>
+</html>

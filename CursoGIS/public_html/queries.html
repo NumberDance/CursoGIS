@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/claro/claro.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+        <link rel="stylesheet" href="estilo.css">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script>var dojoConfig = { parseOnLoad: true };</script>
+        <script src="https://js.arcgis.com/3.23/"></script>
+        
+        <script src="EsriAplicacion.js"></script>
+        <script src="EsriAplicacionPuntos.js"></script>
+        <script src="EsriAplicacionQueries.js"></script>
+        <script>
+            require
+            (
+                dependencias, 
+                function
+                (
+                    Map,Utils,FeatureLayer,GraphicsLayer,
+                    Graphic,Point,SimpleMarkerSymbol,Color,
+                    Query,QueryTask
+                )
+                {
+                    var api = {};
+                    api["Map"] = Map;
+                    api["Utils"] = Utils;
+                    api["FeatureLayer"] = FeatureLayer;
+                    api["GraphicsLayer"] = GraphicsLayer;
+                    
+                    api["Graphic"] = Graphic;
+                    api["Point"] = Point;
+                    api["SimpleMarkerSymbol"] = SimpleMarkerSymbol;
+                    api["Color"] = Color;
+                    
+                    api["Query"] = Query;
+                    api["QueryTask"] = QueryTask;
+        
+                    var aplicacion = new EsriAplicacionQueries(api);
+                    aplicacion.cargarMapaEnBlanco("mapa");
+                    
+                    $("#cargar").click(function() { $("#cargar").val(""); });
+                    $("#cargar").change(function() { aplicacion.cargarCapaDesdeServicio($("#cargar").val()); });
+                    
+                    $("#buscar").click(function() { $("#buscar").val(""); });
+                    $("#buscar").change(function() { aplicacion.consultarAServicio($("#buscar").val()); });
+                }
+            );
+        </script>
+    </head>
+    <body>
+        <div id="mapa"></div>
+        <div class="campo">
+            <input id="cargar" class="entrada" type="text" value="URL del mapa">
+            <input id="buscar" class="entrada" type="text" value="Consulta SQL">
+        </div>
+        <div class="campo">
+            <input id="color" class="entrada2" type="color">
+            <input id="tamaño" class="entrada2" type="number">
+            <input type="radio" name="forma" value="Cuadrado" checked>Cuadrado
+            <input type="radio" name="forma" value="Triangulo">Triangulo
+            <input type="radio" name="forma" value="Circulo">Circulo
+        </div>
+    </body>
+</html>

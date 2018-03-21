@@ -46,12 +46,27 @@
         
                     var aplicacion = new EsriAplicacionQueries(api);
                     aplicacion.cargarMapaEnBlanco("mapa");
+                    aplicacion.agregarCapaGrafica("graf");
                     
-                    $("#cargar").click(function() { $("#cargar").val(""); });
-                    $("#cargar").change(function() { aplicacion.cargarCapaDesdeServicio($("#cargar").val()); });
+                    /*$("#cargar").click
+                    (
+                        function() 
+                        { 
+                            if($("#cargar").val() === "URL del mapa")
+                            { $("#cargar").val(""); } 
+                        }
+                    );
+                    $("#cargar").change(function() { aplicacion.cargarCapaDesdeServicio($("#cargar").val()); });*/
                     
-                    $("#buscar").click(function() { $("#buscar").val(""); });
-                    $("#buscar").change(function() { aplicacion.consultarAServicio($("#buscar").val()); });
+                    $("#buscar").click
+                    (
+                        function() 
+                        { 
+                            if($("#buscar").val() === "Consulta SQL")
+                            { $("#buscar").val(""); }
+                        }
+                    );
+                    $("#buscar").change(function() { aplicacion.consultarAServicio(aplicacion,"graf",$("#cargar").val(),$("#buscar").val()); });
                 }
             );
         </script>
@@ -60,7 +75,7 @@
         <div id="mapa"></div>
         <div class="campo">
             <input id="cargar" class="entrada" type="text" value="URL del mapa">
-            <input id="buscar" class="entrada" type="text" value="Consulta SQL">
+            <input id="buscar" autocomplete="off" class="entrada" type="text" value="Consulta SQL">
         </div>
         <div class="campo">
             <input id="color" class="entrada2" type="color">

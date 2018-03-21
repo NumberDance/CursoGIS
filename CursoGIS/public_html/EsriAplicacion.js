@@ -22,6 +22,8 @@ var EsriAplicacion = function(api)
     
     this.cargarCapaDesdeServicio = function(url)
     { this.mapa.addLayer(new this.api.FeatureLayer(url)); };
+    this.cargarCapaDesdeServicioCampos = function(url,campos)
+    { this.mapa.addLayer(new this.api.FeatureLayer(url,{ outFields : campos })); };
     
     
     this.agregarCapaGrafica = function(id)

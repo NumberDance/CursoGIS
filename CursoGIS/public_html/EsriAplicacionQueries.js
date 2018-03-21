@@ -19,28 +19,42 @@ dependencias.push("dojo/domReady!");
 var EsriAplicacionQueries = function(api)
 {
     this.__proto__ = new EsriAplicacionPuntos(api);
+    this.capa = null;
     
     
-    this.consultarAServicio = function(campos)
-    {
-        
-        /*var tarea = new this.api.QueryTask(direccion);
-        
-        var consulta = new this.api.Query();
-        consulta.outSpatialReference = this.mapa.spatialReference;
-        consulta.returnGeometry = true;
-        consulta.outFields = campos;
-        
-        tarea.execute(consulta, function(respuestas) { console.log("Hola" + respuestas.length); });//aplicacion.procesarRespuesta(aplicacion,respuestas); });*/
+    this.cargarCapaDesdeServicio = function(url)
+    { 
+        this.capa = new this.api.FeatureLayer(url);
+        this.mapa.addLayer(this.capa); 
     };
-    this.procesarRespuesta = function(aplicacion,respuestas)
+    
+    
+    this.consultarAServicio = function(aplicacion,id,url,consulta)
+    { 
+        var filtro = new this.api.Query();
+        filtro.where = consulta;
+        filtro.outFields = [ "*" ];
+        filtro.outSpatialReference = this.mapa.spatialReference;
+        filtro.returnGeometry = true;
+        filtro.spatialRelationship = this.api.Query.SPATIAL_REL_INTERSECTS;
+
+        var tarea = new this.api.QueryTask(url);
+        tarea.execute(filtro,function(resultado) 
+        {
+            console.log(resultado.features);
+            aplicacion.procesarRespuesta(aplicacion,id,resultado.features); });
+    };
+    this.procesarRespuesta = function(aplicacion,id,respuestas)
     {
         var simbolo = new aplicacion.api.SimpleMarkerSymbol("STYLE_CIRCLE",10,null,new aplicacion.api.Color("#ff6600"));
-        console.log(respuestas);
-        for(var respuesta in respuestas.features)
+        
+        for(var i = 0; i < respuestas.length; i++)
         { 
-            respuesta.setSymbol(simbolo);
-            aplicacion.mapa.graphics.add(respuesta); 
+            console.log(respuestas[i]);
+            var punto = new aplicacion.api.Point(respuestas[i].geometry.x,respuestas[i].geometry.y,aplicacion.mapa.spatialReference);
+            var grafico = new api.Graphic(punto,simbolo);
+           
+            aplicacion.mapa.getLayer(id).add(grafico);
         }
     };
 };

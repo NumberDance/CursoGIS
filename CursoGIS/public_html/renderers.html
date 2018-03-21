@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/dijit/themes/claro/claro.css">
+        <link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css">
+        <link rel="stylesheet" href="estilo.css">
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script>var dojoConfig = { parseOnLoad: true };</script>
+        <script src="https://js.arcgis.com/3.23/"></script>
+        
+        <script src="EsriAplicacion.js"></script>
+        <script src="EsriAplicacionRenderers.js"></script>
+        <script>
+            require
+            (
+                dependencias, 
+                function
+                (
+                    Map,Utils,FeatureLayer,GraphicsLayer,
+                    SimpleMarkerSymbol,SimpleRenderer,HeatmapRenderer,
+                    InfoTemplate,InfoWindow,dom,domConstruct
+                )
+                {
+                    var api = {};
+                    api["Map"] = Map;
+                    api["Utils"] = Utils;
+                    api["FeatureLayer"] = FeatureLayer;
+                    api["GraphicsLayer"] = GraphicsLayer;
+                    
+                    api["SimpleMarkerSymbol"] = SimpleMarkerSymbol;
+                    api["SimpleRenderer"] = SimpleRenderer;
+                    api["HeatmapRenderer"] = HeatmapRenderer;
+                    
+                    api["InfoTemplate"] = InfoTemplate;
+                    api["InfoWindow"] = InfoWindow;
+                    api["Dom"] = dom;
+                    api["DomConstruct"] = domConstruct;
+        
+                    var aplicacion = new EsriAplicacionRenderers(api);
+                    aplicacion.cargarMapaEnBlanco("mapa");
+                    aplicacion.cargarCapaDesdeServicioCampos("http://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/MajorCities_WebMercator/FeatureServer/0",["POPULATION"]);
+                    
+                    //aplicacion.renderizarCapaValor("POPULATION",0,3000000);
+                    aplicacion.renderizarCapaCalor("POPULATION",1,5000000,10);
+                    
+                    var aplicacion2 = new EsriAplicacionRenderers(api);
+                    aplicacion2.cargarMapaEnBlanco("mapa2");
+                    aplicacion2.cargarCapaDesdeServicio("http://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/MajorCities_WebMercator/FeatureServer/0");
+                    aplicacion2.renderizarTextoCampo("POPULATION",aplicacion2.getCapa());
+                }
+            );
+        </script>
+    </head>
+    <body>
+        <div id="mapa"></div>
+        <div id="mapa2"></div>
+    </body>
+</html>

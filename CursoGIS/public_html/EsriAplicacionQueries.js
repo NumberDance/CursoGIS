@@ -13,6 +13,8 @@ dependencias.push("esri/Color");
 dependencias.push("esri/tasks/query");
 dependencias.push("esri/tasks/QueryTask");
 dependencias.push("esri/dijit/FeatureTable");
+dependencias.push("esri/tasks/FeatureSet");
+dependencias.push("esri/tasks/Geoprocessor");
 //DOJO, no tocar
 dependencias.push("dojo/domReady!");
 
@@ -22,6 +24,7 @@ var EsriAplicacionQueries = function(api)
     this.__proto__ = new EsriAplicacionPuntos(api);
     this.filtro = null, this.direccion = null;
     this.vista = null;
+    this.datos = [];
     
     
     this.consultarAServicio = function(aplicacion,direccion,consulta)
@@ -55,7 +58,7 @@ var EsriAplicacionQueries = function(api)
     this.agregarVistaDatos = function(aplicacion,div)
     {
         aplicacion.capa = new aplicacion.api.FeatureLayer(aplicacion.direccion);
-        //console.log(aplicacion.direccion);
+        console.log(aplicacion.capa.fields);
         //aplicacion.capa.selectFeatures(aplicacion.filtro);
         //console.log(aplicacion.capa.fields);
         var opciones = {};
@@ -65,5 +68,40 @@ var EsriAplicacionQueries = function(api)
         
         aplicacion.vista = new aplicacion.api.FeatureTable(opciones,div);
         aplicacion.vista.startup();
+    };
+    
+    
+    this.agregarCalculoRutas = function(aplicacion,ruta)
+    { 
+        this.mapa.on
+        (
+            "click", 
+            function(evento) 
+            { 
+                var simbolo = new aplicacion.api.SimpleMarkerSymbol("STYLE_CIRCLE",10,null,new aplicacion.api.Color("#ff6600"));
+                var punto = new aplicacion.api.Point(evento.mapPoint.x,evento.mapPoint.y,aplicacion.mapa.spatialReference);
+                var grafico = new aplicacion.api.Graphic(punto,simbolo);
+                
+                aplicacion.grafica.add(grafico);
+                aplicacion.datos.push(grafico);
+                console.log(aplicacion.datos);
+            }
+        ); 
+    };
+    this.calculoRutas = function(aplicacion)
+    {
+        var coleccion = new aplicacion.api.FeatureSet();
+        coleccion.features = aplicacion.datos;
+        
+        var procesador = new this.api.Geoprocessor("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/GPServer/FindRoutes");
+        procesador.submitJob
+        (
+            { Stops : coleccion,Measurement_Units : "Minutes" },
+            function(informacion) { aplicacion.dibujarRutas(aplicacion,informacion); }
+        );
+    };
+    this.dibujarRutas = function(aplicacion,informacion)
+    {
+        console.log(informacion);
     };
 };

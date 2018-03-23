@@ -10,7 +10,7 @@
 }
 .entrada
 {
-    width: 49.8%;
+    width: 49.5%;
 }
 .entrada2
 {
@@ -20,4 +20,13 @@
 {
     height: available;
     background-color: red;
+}
+#contenedor
+{
+    width: 100%;
+}
+.principal
+{
+    width: 40%;
+    display: inline;
 }

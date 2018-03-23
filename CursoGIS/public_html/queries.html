@@ -27,7 +27,7 @@
                 (
                     Map,Utils,FeatureLayer,GraphicsLayer,
                     Graphic,Point,SimpleMarkerSymbol,Color,
-                    Query,QueryTask,FeatureTable
+                    Query,QueryTask,FeatureTable,FeatureSet,Geoprocessor
                 )
                 {
                     var api = {};
@@ -44,8 +44,10 @@
                     api["Query"] = Query;
                     api["QueryTask"] = QueryTask;
                     api["FeatureTable"] = FeatureTable;
+                    api["FeatureSet"] = FeatureSet;
+                    api["Geoprocessor"] = Geoprocessor;
         
-                    var aplicacion = new EsriAplicacionQueries(api,{ proximidad: 600 });
+                    var aplicacion = new EsriAplicacionQueries(api);
                     aplicacion.cargarMapaEnBlanco("mapa");
                     aplicacion.agregarCapaGrafica();
                     
@@ -74,25 +76,38 @@
                             aplicacion.agregarVistaDatos(aplicacion,"entradas");
                         }
                     );
+            
+                    var aplicacion2 = new EsriAplicacionQueries(api);
+                    aplicacion2.cargarMapaEnBlanco("mapa2");
+                    aplicacion2.agregarCapaGrafica();
+                    aplicacion2.agregarCalculoRutas(aplicacion2);
+                    
+                    $("#calcular").click(function() { aplicacion2.calculoRutas(aplicacion2); });
                 }
             );
         </script>
     </head>
     <body>
-        <div id="mapa"></div>
-        <div class="campo">
-            <input id="cargar" class="entrada" type="text" value="URL del mapa">
-            <input id="buscar" autocomplete="off" class="entrada" type="text" value="Consulta SQL">
-        </div>
-        <div class="campo">
-            <input id="color" class="entrada2" type="color">
-            <input id="tamaño" class="entrada2" type="number">
-            <input type="radio" name="forma" value="Cuadrado" checked>Cuadrado
-            <input type="radio" name="forma" value="Triangulo">Triangulo
-            <input type="radio" name="forma" value="Circulo">Circulo
-        </div>
-        <div id="entradas">
-            
+        <div id="contenedor">
+            <div class="principal">
+                <div id="mapa"></div>
+                <div class="campo">
+                    <input id="cargar" class="entrada" type="text" value="URL del mapa">
+                    <input id="buscar" autocomplete="off" class="entrada" type="text" value="Consulta SQL">
+                </div>
+                <div class="campo">
+                    <input id="color" class="entrada2" type="color">
+                    <input id="tamaño" class="entrada2" type="number">
+                    <input type="radio" name="forma" value="Cuadrado" checked>Cuadrado
+                    <input type="radio" name="forma" value="Triangulo">Triangulo
+                    <input type="radio" name="forma" value="Circulo">Circulo
+                </div>
+                <div id="entradas"></div>
+            </div>
+            <div class="principal">
+                <input class="campo" id="calcular" type="button" name="Calcular" value="Calcular">
+                <div id="mapa2"></div>
+            </div>
         </div>
     </body>
 </html>

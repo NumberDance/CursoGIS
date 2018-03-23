@@ -18,18 +18,18 @@ var EsriAplicacionPuntos = function(api)
     this.__proto__ = new EsriAplicacion(api);
     
    
-    this.agregarDibujarPuntos = function(id,mapa,api)
+    this.agregarDibujarPuntos = function(mapa,aplicacion)
     {
         mapa.on
         (
             "click",
             function(evento) 
             {
-                var punto = new api.Point(evento.mapPoint.x,evento.mapPoint.y,mapa.spatialReference);
-                var simbolo = new api.SimpleMarkerSymbol("STYLE_CIRCLE",10,null,new api.Color("#ff6600"));
+                var punto = new aplicacion.api.Point(evento.mapPoint.x,evento.mapPoint.y,mapa.spatialReference);
+                var simbolo = new aplicacion.api.SimpleMarkerSymbol("STYLE_CIRCLE",10,null,new api.Color("#ff6600"));
                 
-                var grafico = new api.Graphic(punto,simbolo);
-                mapa.getLayer(id).add(grafico);
+                var grafico = new aplicacion.api.Graphic(punto,simbolo);
+                aplicacion.grafica.add(grafico);
             }
         );
     };

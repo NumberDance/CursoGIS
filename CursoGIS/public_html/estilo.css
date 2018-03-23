@@ -16,3 +16,8 @@
 {
     width: 10%;
 }
+#entradas
+{
+    height: available;
+    background-color: red;
+}

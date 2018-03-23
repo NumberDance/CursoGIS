@@ -41,20 +41,16 @@
                     
                     api["InfoTemplate"] = InfoTemplate;
                     api["InfoWindow"] = InfoWindow;
-                    api["Dom"] = dom;
-                    api["DomConstruct"] = domConstruct;
         
                     var aplicacion = new EsriAplicacionRenderers(api);
                     aplicacion.cargarMapaEnBlanco("mapa");
                     aplicacion.cargarCapaDesdeServicioCampos("http://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/MajorCities_WebMercator/FeatureServer/0",["POPULATION"]);
-                    
-                    //aplicacion.renderizarCapaValor("POPULATION",0,3000000);
                     aplicacion.renderizarCapaCalor("POPULATION",1,5000000,10);
                     
                     var aplicacion2 = new EsriAplicacionRenderers(api);
                     aplicacion2.cargarMapaEnBlanco("mapa2");
-                    aplicacion2.cargarCapaDesdeServicio("http://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/MajorCities_WebMercator/FeatureServer/0");
-                    aplicacion2.renderizarTextoCampo("POPULATION",aplicacion2.getCapa());
+                    aplicacion2.cargarCapaDesdeServicioCampos("http://services.arcgis.com/BG6nSlhZSAWtExvp/arcgis/rest/services/MajorCities_WebMercator/FeatureServer/0",["*"]);
+                    aplicacion2.renderizarTextoCampo("NAME","POPULATION");
                 }
             );
         </script>

@@ -12,6 +12,7 @@ var EsriAplicacion = function(api)
 {    
     this.api = api;
     this.mapa = null;
+    this.capa = null, this.grafica = null;
     
     
     this.cargarMapaOnline = function(id,div)
@@ -21,18 +22,27 @@ var EsriAplicacion = function(api)
     
     
     this.cargarCapaDesdeServicio = function(url)
-    { this.mapa.addLayer(new this.api.FeatureLayer(url)); };
-    this.cargarCapaDesdeServicioCampos = function(url,campos)
-    { this.mapa.addLayer(new this.api.FeatureLayer(url,{ outFields : campos })); };
-    
-    
-    this.agregarCapaGrafica = function(id)
-    {
-        var capa = new this.api.GraphicsLayer();
-        capa.id = id;
-        capa.show();
+    { 
+        this.mapa.removeLayer(this.capa);
+        this.capa = new this.api.FeatureLayer(url);
         
-        this.mapa.addLayer(capa);
+        this.mapa.addLayer(this.capa); 
+    };
+    this.cargarCapaDesdeServicioCampos = function(url,campos)
+    { 
+        this.mapa.removeLayer(this.capa);
+        this.capa = new this.api.FeatureLayer(url,{ outFields : campos });
+        
+        this.mapa.addLayer(this.capa);
+    };
+    
+    
+    this.agregarCapaGrafica = function()
+    {
+        this.grafica = new this.api.GraphicsLayer();
+        this.grafica.show();
+        
+        this.mapa.addLayer(this.grafica);
     };
     
        
@@ -40,4 +50,10 @@ var EsriAplicacion = function(api)
     { return this.mapa; };
     this.getApi = function()
     { return this.api; };
+    
+    
+    this.setMapa = function(mapa)
+    { this.mapa = mapa; };
+    this.setApi = function(api)
+    { this.api = api; };
 };

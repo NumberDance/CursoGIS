@@ -10,8 +10,6 @@ dependencias.push("esri/renderers/SimpleRenderer");
 dependencias.push("esri/renderers/HeatmapRenderer");
 dependencias.push("esri/InfoTemplate");
 dependencias.push("esri/dijit/InfoWindow");
-dependencias.push("dojo/dom");
-dependencias.push("dojo/dom-construct");
 //DOJO, no tocar
 dependencias.push("dojo/domReady!");
 
@@ -61,17 +59,12 @@ var EsriAplicacionRenderers = function(api)
         
         this.capa.setRenderer(renderizador);
     };
-    this.renderizarTextoCampo = function(campo,capa)
+    this.renderizarTextoCampo = function(titulo,contenido)
     {
         var plantilla = new this.api.InfoTemplate();
-        plantilla.setTitle("<b>${" + campo + "}</b>");
-        plantilla.setContent
-        (
-            function(grafico) 
-            {
-                return "<b>${" + campo + "}</b>";
-            }
-        );
+        plantilla.setTitle("${" + titulo + "}");
+        plantilla.setContent("${" + contenido + "}");
+        
         this.capa.setInfoTemplate(plantilla);
     };
     

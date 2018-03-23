@@ -27,7 +27,7 @@
                 (
                     Map,Utils,FeatureLayer,GraphicsLayer,
                     Graphic,Point,SimpleMarkerSymbol,Color,
-                    Query,QueryTask
+                    Query,QueryTask,FeatureTable
                 )
                 {
                     var api = {};
@@ -43,12 +43,13 @@
                     
                     api["Query"] = Query;
                     api["QueryTask"] = QueryTask;
+                    api["FeatureTable"] = FeatureTable;
         
-                    var aplicacion = new EsriAplicacionQueries(api);
+                    var aplicacion = new EsriAplicacionQueries(api,{ proximidad: 600 });
                     aplicacion.cargarMapaEnBlanco("mapa");
-                    aplicacion.agregarCapaGrafica("graf");
+                    aplicacion.agregarCapaGrafica();
                     
-                    /*$("#cargar").click
+                    $("#cargar").click
                     (
                         function() 
                         { 
@@ -56,7 +57,6 @@
                             { $("#cargar").val(""); } 
                         }
                     );
-                    $("#cargar").change(function() { aplicacion.cargarCapaDesdeServicio($("#cargar").val()); });*/
                     
                     $("#buscar").click
                     (
@@ -66,7 +66,14 @@
                             { $("#buscar").val(""); }
                         }
                     );
-                    $("#buscar").change(function() { aplicacion.consultarAServicio(aplicacion,"graf",$("#cargar").val(),$("#buscar").val()); });
+                    $("#buscar").change
+                    (
+                        function() 
+                        { 
+                            aplicacion.consultarAServicio(aplicacion,$("#cargar").val(),$("#buscar").val()); 
+                            aplicacion.agregarVistaDatos(aplicacion,"entradas");
+                        }
+                    );
                 }
             );
         </script>
@@ -83,6 +90,9 @@
             <input type="radio" name="forma" value="Cuadrado" checked>Cuadrado
             <input type="radio" name="forma" value="Triangulo">Triangulo
             <input type="radio" name="forma" value="Circulo">Circulo
+        </div>
+        <div id="entradas">
+            
         </div>
     </body>
 </html>

@@ -41,9 +41,8 @@
         
                     var aplicacion = new EsriAplicacionPuntos(api);
                     aplicacion.cargarMapaEnBlanco("mapa");
-                    //aplicacion.cargarMapaOnline("F92ab37c834b4ed3bdef2f8b680114ca","mapa");
-                    aplicacion.agregarCapaGrafica("geom1");
-                    aplicacion.agregarDibujarPuntos("geom1",aplicacion.getMapa(),aplicacion.getApi());
+                    aplicacion.agregarCapaGrafica();
+                    aplicacion.agregarDibujarPuntos(aplicacion.getMapa(),aplicacion);
                 }
             );
         </script>

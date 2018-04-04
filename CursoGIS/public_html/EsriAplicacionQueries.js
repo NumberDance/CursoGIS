@@ -92,6 +92,7 @@ var EsriAplicacionQueries = function(api)
     {
         var coleccion = new aplicacion.api.FeatureSet();
         coleccion.features = aplicacion.datos;
+        console.log(coleccion.features);
         
         var procesador = new this.api.Geoprocessor("http://sampleserver6.arcgisonline.com/arcgis/rest/services/NetworkAnalysis/SanDiego/GPServer/FindRoutes");
         procesador.submitJob

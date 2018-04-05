@@ -1,0 +1,19 @@
+{
+  "name": "ZoomerTema",
+  "platform": "HTML",
+  "version": "2.7",
+  "wabVersion": "2.7",
+  "author": "Javier",
+  "description": "This is a very simple widget",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+    "inPanel": false,
+    "hasConfig": true,
+    "hasStyle": false,
+    "hasLocale": false,
+    "hasUIFile": true,
+    "hasSettingPage": true,
+    "hasSettingUIFile": true
+  }
+}

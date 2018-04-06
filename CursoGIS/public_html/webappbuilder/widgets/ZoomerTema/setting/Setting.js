@@ -12,11 +12,13 @@ define
             [BaseWidgetSetting], 
             {
                 baseclass: 'jimu-widget-dsc-setting',
-                onOpen: function ()
+                startup: function()
+                { console.log("Se inicia"); },
+                destroy: function()
                 {
-                    console.log("TAMANO " + dom.byId("tamano").value);
-                    console.log("COLORINES " + dom.byId("colorines").value);
-                    console.log("ESTILO " + dom.byId("estilo").value);
+                    this.config["tamano"] = dom.byId("tamano").value;
+                    this.config["colorines"] = dom.byId("colorines").value;
+                    this.config["estilo"] = dom.byId("estilo").value;
                 }
             }
         );

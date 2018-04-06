@@ -26,6 +26,10 @@
       "description": "this is the left layout"
     },
     {
+      "name": "down",
+      "description": "this is the down layout"
+    },   
+    {
       "name": "right",
       "description": "this is the right layout"
     }
